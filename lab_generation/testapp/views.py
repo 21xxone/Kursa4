@@ -1,9 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, UserRegistrationForm
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LogoutView
+from .forms import *
 
 
 
@@ -49,4 +47,14 @@ def profile(request):
         return render(request,'testapp/profile.html')
     else:
         return HttpResponse('Invalid login')
+    
+def home1(request):
+    if request.method == 'POST':
+        home1 = MainPage(request.POST)
+        return render(request,'testapp/profile.html')
+    else:
+        home1 = MainPage()
+    return render(request, 'testapp/login.html', {'home1': home1})
+
+
 
