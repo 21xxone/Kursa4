@@ -1,0 +1,11 @@
+{% extends "testapp/layout.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+    <h1>Вход</h1>
+    <p>Пожалуйста, следуйте данной форме для входа:</p>
+    <form action="." method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Log-in"></p>
+    </form>
+{% endblock %}

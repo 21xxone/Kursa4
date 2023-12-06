@@ -1,0 +1,7 @@
+{% extends 'testapp/layout.html' %}
+{% block content %}
+    <h1>Профиль пользователя</h1>
+    <p>Логин: {{ request.user.username }}</p>
+    <p>Имя Фамилия: {{ request.user.first_name }}</p>
+{% endblock %}
+<!-- Добавьте другие поля профиля -->
