@@ -1,10 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login
-from .forms import *
-
-
-
+from .forms import LoginForm, UserRegistrationForm, MainPage, CharapterBaseForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView
+from django.forms import formset_factory
+from .replace import *
+from .writeToDocx import *
 
 def register(request):
     if request.method == 'POST':
@@ -48,13 +51,44 @@ def profile(request):
     else:
         return HttpResponse('Invalid login')
     
-def home1(request):
+def generalInfo(request):
     if request.method == 'POST':
-        home1 = MainPage(request.POST)
+        generalInfo = MainPage(request.POST)
+        if (int(request.POST.get('num_ch', '')) > 10 or int(request.POST.get('num_ch', '')) < 1):
+            return render(request, 'testapp/generalInfo.html', {'generalInfo': generalInfo})
+        else:
+            #fill docx#
+            keyword_dict["[num]"] = request.POST.get('num', '')
+            keyword_dict["[group]"] = request.POST.get('group', '')
+            keyword_dict["[username]"] = request.POST.get('fio', '')
+            keyword_dict["[username1]"] = request.POST.get('fio2', '')
+            keyword_dict["[mission]"] = request.POST.get('mission', '')
+            request.session['num_ch'] = request.POST.get('num_ch', '')
+            request.session['conclusion'] = request.POST.get('conclusion', '')
+            checkIfExists()
+            replace()
+            return redirect('/chapterInfo')
+    else:
+        generalInfo = MainPage()
+        return render(request, 'testapp/generalInfo.html', {'generalInfo': generalInfo})
+
+
+def chapterInfo(request):
+    num_ch = request.session['num_ch']
+    ChapterInfoSet = formset_factory(CharapterBaseForm, extra=int(num_ch))
+
+    if request.method == 'POST':
+        newOut()
+        chapterset = ChapterInfoSet(request.POST)
+        for f in chapterset:
+            writeToDocx(f['charapter'].value(), True)
+            writeToDocx(f['text'].value(), False)
+        #fill docx#
+        writeToDocx("Вывод", True)
+        writeToDocx(request.session['conclusion'], False)
         return render(request,'testapp/profile.html')
     else:
-        home1 = MainPage()
-    return render(request, 'testapp/login.html', {'home1': home1})
-
-
-
+        context = {}
+        chapterset = ChapterInfoSet()
+        context['chapterSet'] = chapterset
+        return render(request, 'testapp/chapterInfo.html', context)

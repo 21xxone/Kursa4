@@ -1,0 +1,16 @@
+{% extends "testapp/layout.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+    <h1>Заполнить главы</h1>
+    <form action="." method="post">
+        {{ chapterSet.management_form }}
+        <table>
+            {% for form in chapterSet %}
+                <label> Глава {{forloop.counter}} </label>
+                {{ form }}
+            {% endfor %}
+        </table>
+        {% csrf_token %}
+        <p><input type="submit" value="Готово"></p>
+    </form>
+{% endblock %}
