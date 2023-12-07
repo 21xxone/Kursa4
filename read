@@ -1,3 +1,7 @@
 Сделать виртуальное измерение (venv) 
 python -m venv venv
 pip install docx2python
+pip install docx2python
+python -m pip install Django
+python3 -m pip install --upgrade Pillow
+pip install python-docx
