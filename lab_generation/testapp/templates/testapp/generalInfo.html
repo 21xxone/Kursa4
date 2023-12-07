@@ -1,0 +1,10 @@
+{% extends "testapp/layout.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+    <h1>Заполнить данные</h1>
+    <form action="." method="post">
+        {{ generalInfo.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Далее"></p>
+    </form>
+{% endblock %}

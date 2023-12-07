@@ -23,16 +23,16 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 class MainPage(forms.Form):
-    num = forms.CharField(label="Введите номер лабораторной работы")    
-    num_ch = forms.CharField(label="Количество разделов")
-    
+    num = forms.CharField(label="Введите номер лабораторной работы")
+    group = forms.CharField(label="Введите номер группы") 
+    fio = forms.CharField(label="Введите ФИО") 
+    fio2 = forms.CharField(label="Введите ФИО(опционально)")
+    mission = forms.CharField(label="Запишите цель работы", widget=forms.Textarea)     
+    num_ch = forms.CharField(label="Количество разделов(не более 10)")
+    conclusion = forms.CharField(label="Вывод", widget=forms.Textarea)
 
 
 class CharapterBaseForm(forms.Form):
     charapter = forms.CharField()
-    text = forms.CharField()
+    text = forms.CharField(widget=forms.Textarea)
     #images = forms.CharField()
-
-def FormSet(num_ch):
-    CharapterFormSet = formset_factory(CharapterBaseForm, extra=num_ch)
-    return CharapterFormSet
