@@ -1,2 +1,3 @@
 Сделать виртуальное измерение (venv) 
 python -m venv venv
+pip install docx2python
