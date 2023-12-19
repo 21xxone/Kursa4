@@ -19,8 +19,8 @@ class UserRegistrationForm(forms.ModelForm):
     
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(label='Имя пользователя')
+    password = forms.CharField(label='Пароль',widget=forms.PasswordInput)
 
 class MainPage(forms.Form):
     num = forms.CharField(label="Введите номер лабораторной работы")
