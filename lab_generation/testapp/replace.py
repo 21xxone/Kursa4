@@ -26,7 +26,7 @@ def replace():
         replace_docx_text(
             output_file,
             tmp_file,
-            (i, keyword_dict[i]),  # replace Apples with Bananas
+            (i, keyword_dict[i]), 
             html=True,
         )
         doc = docx.Document("tmp.docx")
